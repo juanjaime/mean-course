@@ -20,10 +20,12 @@ export class PostsService {
           title: post.title,
           content: post.content,
           id: post._id,
-          imagepath: post.imagepath
+          imagepath: post.imagepath,
+          creator:post.creator
         };
       }), postscount: postData.postscount};
     })).subscribe((transformedPostData) => {
+      console.log(transformedPostData);
     this.posts = transformedPostData.posts;
     this.postsUpdated.next({
       posts: [...this.posts],
@@ -35,7 +37,7 @@ export class PostsService {
     return this.postsUpdated.asObservable();
   }
   getPost(id: string) {
-    return this.http.get<{_id: string, title: string, content: string, imagepath: string}>(`http://localhost:3000/api/posts/${id}`);
+    return this.http.get<{_id: string, title: string, content: string, imagepath: string, creator:string}>(`http://localhost:3000/api/posts/${id}`);
   }
   addPost( title: string, content: string, image: File) {
     const postData = new FormData();
@@ -60,8 +62,10 @@ export class PostsService {
         id: id,
         title: title,
         content: content,
-        imagepath: image
+        imagepath: image,
+        creator: null
       };
+      //this.router.navigate(['/']);
     }
     this.http
       .put(`http://localhost:3000/api/posts/${id}`, postData)
