@@ -7,7 +7,7 @@ const path = require('path');
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use('/images',express.static(path.join('backend/images')));
-mongoose.connect('mongodb+srv://juan:JLE88XVSv09BO52S@cluster0-zqvtj.mongodb.net/test').then(()=>{
+mongoose.connect('mongodb+srv://juan:'+process.env.MONGO_ATLAS_PW+'@cluster0-zqvtj.mongodb.net/test').then(()=>{
   console.log("Connected to database")
 }).catch(()=>{
   console.log("Cannot connect to the database");
